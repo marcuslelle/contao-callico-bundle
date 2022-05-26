@@ -1,0 +1,38 @@
+services:
+
+    # Contao frontend module Marcuslelle\ContaoCallicoBundle\Controller\FrontendModule\CallicoListingModuleController
+    # We used annotations for tagging the frontend module category, the frontend module type and the frontend module template
+    Marcuslelle\ContaoCallicoBundle\Controller\FrontendModule\CallicoListingModuleController:
+        tags:
+            - { name: container.service_subscriber }
+        public: true
+        # Since Symfony 5 the container has to be set manually
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+    
+    # Contao content element Marcuslelle\ContaoCallicoBundle\Controller\ContentElement\CallicoElementController
+    # We used annotations for tagging the frontend element category, the frontend element type and the frontend element template
+    Marcuslelle\ContaoCallicoBundle\Controller\ContentElement\CallicoElementController:
+        tags:
+            - { name: container.service_subscriber }
+        public: true
+        # Since Symfony 5 the container has to be set manually
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+    # Custom route
+    Marcuslelle\ContaoCallicoBundle\Controller\MyCustomController:
+        arguments:
+            - '@twig'
+        public: true
+        # Since Symfony 5 the container has to be set manually
+        calls:
+            - [ setContainer, [ '@Psr\Container\ContainerInterface' ] ]
+    
+    # Add a session bag
+    Marcuslelle\ContaoCallicoBundle\Session\Attribute\ArrayAttributeBag:
+        arguments:
+            - _marcuslelle_contao_callico_attributes
+        calls:
+            - [ setName, [ marcuslelle_contao_callico ] ]
+
+
